@@ -2,9 +2,12 @@ import java.io.File
 
 fun main(){
 
-    testWriteFile()
+    //testWriteFile()
 
-    testWriteFile2()
+    //testWriteFile2()
+    //println(testReadFile())
+
+    testReadFile2()
 
 }
 
@@ -30,8 +33,33 @@ data class TestArticle(
     }
 }
 
+fun testReadFile (): String =
+    File("test/3.txt").readText(Charsets.UTF_8)
+
+
+
+
+fun testReadFile2() {
+    testWriteFile2()
+
+    val jsonStr = File("test/3.json").readText(Charsets.UTF_8)
+    val testArticle = testArticleFromJson(jsonStr)
+    println("id : ${testArticle.id} / title : ${testArticle.title} / body : ${testArticle.body}")
+}
+
+fun testArticleFromJson(jsonStr: String): TestArticle {
+    val jsonMap = mapFromJson(jsonStr)
+    val id = jsonMap["id"].toString().toInt()
+    val title = jsonMap["title"].toString()
+    val body = jsonMap["body"].toString()
+    
+    return TestArticle(id, title, body)
+}
+
+
+
 fun testWriteFile2() {
-    val testArticle = TestArticle(1, "제목1", "내용1")
+    val testArticle = TestArticle(2, "제목2", "내용2")
 
     File("test/3.json").writeText(testArticle.toJson())
 }
@@ -41,15 +69,16 @@ fun testWriteFile(){
     val title = "제목"
     val body = "내용"
 
-    var fileContent = "{"
+    var fileContent = ""
+    fileContent += "{"
     fileContent += "\r\n"
-    fileContent += "\t" + """ "id":$id, """.trim()
+    fileContent += "\t" + """ "id":"$id", """.trim()
     fileContent += "\r\n"
-    fileContent += "\t" + """ "title":$title, """.trim()
+    fileContent += "\t" + """ "title":"$title", """.trim()
     fileContent += "\r\n"
-    fileContent += "\t" + """ "body":$body """.trim()
+    fileContent += "\t" + """ "body":"$body" """.trim()
     fileContent += "\r\n"
     fileContent += "}"
 
-    File("test1.txt").writeText(fileContent)
+    File("test/1.txt").writeText(fileContent)
 }
