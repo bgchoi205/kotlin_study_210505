@@ -82,7 +82,7 @@ class ArticleController{
             println("권한이 없습니다.")
             return
         }
-        articleRepository.articles.remove(article)
+        articleRepository.deleteArticle(article)
         println("$id 번 게시물 삭제완료")
     }
 

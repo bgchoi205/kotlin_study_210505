@@ -11,7 +11,7 @@ fun main(){
     val memberController = MemberController()
     val boardController = BoardController()
 
-    articleRepository.makeTestArticles()
+
     memberRepository.makeTestMembers()
     boardRepository.makeTestBoards()
 
